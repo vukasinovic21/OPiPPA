@@ -1,6 +1,8 @@
 package fin.domaci1.controllers;
 
+import fin.domaci1.dtos.LoginDto;
 import fin.domaci1.dtos.RegisterDto;
+import fin.domaci1.models.Korisnik;
 import fin.domaci1.services.KorisnikServis;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.POST;
@@ -22,4 +24,14 @@ public class KorisnikController
     {
         korisnikServis.registerUser(registerDto);
     }
+
+    @POST
+    @Path("/login")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Korisnik login(LoginDto loginDto) throws Exception, NoSuchAlgorithmException
+    {
+        return korisnikServis.login(loginDto);
+    }
+
 }

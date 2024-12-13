@@ -2,7 +2,9 @@ package fin.domaci1.services;
 
 import fin.domaci1.dao.KorisnikDao;
 import fin.domaci1.dao.ResourcesManager;
+import fin.domaci1.dtos.LoginDto;
 import fin.domaci1.dtos.RegisterDto;
+import fin.domaci1.models.Korisnik;
 
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
@@ -30,6 +32,18 @@ public class KorisnikServis
         catch (SQLException ex)
         {
             throw new Exception("Greska pri registrovanju korisnika.", ex);
+        }
+    }
+
+    public Korisnik login(LoginDto loginDto) throws Exception, NoSuchAlgorithmException
+    {
+        try (Connection con = ResourcesManager.getConnection())
+        {
+            return userDao.login(loginDto, con);
+        }
+        catch (SQLException ex)
+        {
+            throw new Exception("Error during login.", ex);
         }
     }
 }

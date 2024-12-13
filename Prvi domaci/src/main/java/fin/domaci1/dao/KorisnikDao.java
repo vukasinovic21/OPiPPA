@@ -1,11 +1,14 @@
 package fin.domaci1.dao;
 
+import fin.domaci1.dtos.LoginDto;
 import fin.domaci1.dtos.RegisterDto;
+import fin.domaci1.models.Korisnik;
 import fin.domaci1.util.HashUtil;
 
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class KorisnikDao
@@ -40,5 +43,33 @@ public class KorisnikDao
             ps.setInt(8, 0);
             ps.executeUpdate();
         }
+    }
+
+    public Korisnik login(LoginDto loginDto, Connection con) throws SQLException, Exception, NoSuchAlgorithmException
+    {
+        String query = "select * from korisnik where username = ? and sifra = ?";
+        Korisnik korisnik = null;
+        var sifra = HashUtil.getSHA256(loginDto.getPassword());
+        try (PreparedStatement ps = con.prepareStatement(query)) {
+            ps.setString(1, loginDto.getUsername());
+            ps.setString(2, sifra);
+            try (ResultSet rs = ps.executeQuery())
+            {
+                if (rs.next())
+                {
+                    korisnik = new Korisnik(
+                            rs.getInt("id"),
+                            rs.getString("imePrezime"),
+                            rs.getString("korisnickoIme"),
+                            rs.getString("email"),
+                            rs.getString("datumRodjenja"),
+                            rs.getInt("stanje"),
+                            rs.getInt("potroseno")
+                    );
+                }
+            }
+        }
+        if(korisnik == null) throw new Exception("Pogresan username ili sifra.");
+        return korisnik;
     }
 }

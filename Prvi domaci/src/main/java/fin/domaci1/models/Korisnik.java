@@ -5,8 +5,7 @@ import java.io.Serializable;
 public class Korisnik implements Serializable
 {
     private int id;
-    private String ime;
-    private String prezime;
+    private String imePrezime;
     private String korisnickoIme;
     private String email;
     private String datumRodjenja;
@@ -16,11 +15,10 @@ public class Korisnik implements Serializable
     public Korisnik()
     {}
 
-    public Korisnik(int id, String ime, String prezime, String korisnickoIme, String email, String datumRodjenja, int stanje, int potroseno)
+    public Korisnik(int id, String imePrezime, String korisnickoIme, String email, String datumRodjenja, int stanje, int potroseno)
     {
         this.id = id;
-        this.ime = ime;
-        this.prezime = prezime;
+        this.imePrezime = imePrezime;
         this.korisnickoIme = korisnickoIme;
         this.email = email;
         this.datumRodjenja = datumRodjenja;
@@ -37,19 +35,11 @@ public class Korisnik implements Serializable
     }
 
     public String getIme() {
-        return ime;
+        return imePrezime;
     }
 
-    public void setIme(String ime) {
-        this.ime = ime;
-    }
-
-    public String getPrezime() {
-        return prezime;
-    }
-
-    public void setPrezime(String prezime) {
-        this.prezime = prezime;
+    public void setIme(String imePrezime) {
+        this.imePrezime = imePrezime;
     }
 
     public String getKorisnickoIme() {
