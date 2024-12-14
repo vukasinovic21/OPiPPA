@@ -12,6 +12,7 @@ import jakarta.ws.rs.core.MediaType;
 
 import java.security.NoSuchAlgorithmException;
 
+@Path("/korisnik")
 public class KorisnikController
 {
     private final KorisnikServis korisnikServis = KorisnikServis.getInstance();
