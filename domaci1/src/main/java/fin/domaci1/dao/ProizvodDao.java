@@ -27,12 +27,12 @@ public class ProizvodDao
     public List<ProizvodDto> pretraziProizvode(Integer donjaGranica, Integer gornjaGranica, String vrsta, String kljucnaRec, Integer korisnikId, Connection con) throws SQLException
     {
         List<ProizvodDto> proizvodi = new ArrayList<>();
-        String query = "SELECT naziv, cena FROM proizvod WHERE 1=1";
+        String query = "SELECT proizvod_id, naziv, cena FROM proizvod WHERE 1=1";
 
         if (donjaGranica != null) query += " AND cena >= ?";
         if (gornjaGranica != null) query += " AND cena <= ?";
         if (vrsta != null) query += " AND vrsta_opreme = ?";
-        if (kljucnaRec != null) query += " AND naziv LIKE ?";
+        if (kljucnaRec != null) query += " AND LOWER(naziv) LIKE ?";
 
         try (PreparedStatement ps = con.prepareStatement(query))
         {
@@ -40,7 +40,7 @@ public class ProizvodDao
             if (donjaGranica != null) ps.setInt(index++, donjaGranica);
             if (gornjaGranica != null) ps.setInt(index++, gornjaGranica);
             if (vrsta != null) ps.setString(index++, vrsta);
-            if (kljucnaRec != null) ps.setString(index++, "%" + kljucnaRec + "%");
+            if (kljucnaRec != null) ps.setString(index++, "%" + kljucnaRec.toLowerCase() + "%");
 
             try (ResultSet rs = ps.executeQuery())
             {
