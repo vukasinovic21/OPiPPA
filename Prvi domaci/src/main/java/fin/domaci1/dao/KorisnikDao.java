@@ -58,18 +58,58 @@ public class KorisnikDao
                 if (rs.next())
                 {
                     korisnik = new Korisnik(
-                            rs.getInt("id"),
-                            rs.getString("imePrezime"),
-                            rs.getString("korisnickoIme"),
+                            rs.getInt("korisnik_id"),
+                            rs.getString("ime_i_prezime"),
+                            rs.getString("username"),
                             rs.getString("email"),
-                            rs.getString("datumRodjenja"),
-                            rs.getInt("stanje"),
-                            rs.getInt("potroseno")
+                            rs.getString("datum_rodjenja"),
+                            rs.getInt("stanje_racuna"),
+                            rs.getInt("kolicina_potrosenog_novca")
                     );
                 }
             }
         }
         if(korisnik == null) throw new Exception("Pogresan username ili sifra.");
         return korisnik;
+    }
+
+    public Korisnik nadjiKorisnikaPoId(int id, Connection con) throws SQLException
+    {
+        Korisnik korisnik = null;
+        String query = "SELECT * FROM korisnik WHERE korisnik_id = ?";
+
+        try (PreparedStatement ps = con.prepareStatement(query))
+        {
+            ps.setInt(1, id);
+            try (ResultSet rs = ps.executeQuery())
+            {
+                if (rs.next())
+                {
+                    korisnik = new Korisnik(
+                            rs.getInt("korisnik_id"),
+                            rs.getString("ime_i_prezime"),
+                            rs.getString("username"),
+                            rs.getString("email"),
+                            rs.getString("datum_rodjenja"),
+                            rs.getInt("stanje_racuna"),
+                            rs.getInt("kolicina_potrosenog_novca")
+                    );
+                }
+            }
+        }
+        return korisnik;
+    }
+
+    public void azurirajStanje(int cena, Korisnik korisnik, Connection con) throws SQLException
+    {
+        String query = "UPDATE korisnik SET stanje_racuna = ?, kolicina_potrosenog_novca = ? WHERE korisnik_id = ?";
+
+        try (PreparedStatement ps = con.prepareStatement(query))
+        {
+            ps.setLong(1, korisnik.getStanje() - cena);
+            ps.setLong(2, korisnik.getPotroseno() + cena);
+            ps.setLong(3, korisnik.getId());
+            ps.executeUpdate();
+        }
     }
 }
