@@ -25,7 +25,7 @@ public class ProizvodServis
         return instance;
     }
 
-     public List<ProizvodDto> sviProizvodi() throws Exception
+    public List<ProizvodDto> sviProizvodi() throws Exception
     {
         try (Connection con = ResourcesManager.getConnection())
         {
@@ -37,6 +37,30 @@ public class ProizvodServis
         }
     }
     
+    public List<String> sveVrste() throws Exception
+    {
+        try (Connection con = ResourcesManager.getConnection())
+        {
+            return proizvodDao.sveVrste(con);
+        }
+        catch (SQLException ex)
+        {
+            throw new Exception("Greska u pretrazi svih vrsti proizvoda.", ex);
+        }
+    }
+            
+    public List<ProizvodDto> proizvodiPoVrsti(String vrsta) throws Exception
+    {
+        try (Connection con = ResourcesManager.getConnection())
+        {
+            return proizvodDao.proizvodiPoVrsti(vrsta, con);
+        }
+        catch (SQLException ex)
+        {
+            throw new Exception("Greska u pretrazi proizvoda iz po vrsti.", ex);
+        }
+    }        
+            
     public List<ProizvodDto> pretragaProizvoda(Integer donjaGranica, Integer gornjaGranica, String vrsta, String kljucnaRec, Integer korisnikId) throws Exception
     {
         try (Connection con = ResourcesManager.getConnection())

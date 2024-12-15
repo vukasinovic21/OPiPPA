@@ -29,6 +29,25 @@ public class ProizvodController
     }
     
     @GET
+    @Path("/vrste")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response vrste() throws Exception
+    {
+        return Response.ok(proizvodServis.sveVrste()).build();
+    }
+    
+    @GET
+    @Path("/poVrsti")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response pretragaProizvoda(
+            @QueryParam("vrsta") String vrsta) throws Exception
+    {
+        return Response.ok(proizvodServis.proizvodiPoVrsti(vrsta)).build();
+    }
+    
+    @GET
     @Path("/pretraga")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)

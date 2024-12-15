@@ -23,7 +23,34 @@ public class ProizvodDao
         return instance;
     }
 
-
+    
+    public List<ProizvodDto> proizvodiPoVrsti(String vrsta, Connection con) throws SQLException
+    {
+        List<ProizvodDto> proizvodi = new ArrayList<>();
+        String query = "SELECT proizvod_id, naziv, cena FROM proizvod WHERE 1=1";        
+        if (vrsta != null) query += " AND vrsta_opreme = ?";
+ 
+        try (PreparedStatement ps = con.prepareStatement(query))
+        {
+            int index = 1;
+            if (vrsta != null) ps.setString(index++, vrsta);
+        
+            try (ResultSet rs = ps.executeQuery())
+            {
+                while (rs.next())
+                {
+                    ProizvodDto proizvod = new ProizvodDto(
+                            rs.getInt("proizvod_id"),
+                            rs.getString("naziv"),
+                            rs.getInt("cena")
+                    );
+                    proizvodi.add(proizvod);
+                }
+            }
+        }
+        return proizvodi;
+    }
+            
     public List<ProizvodDto> pretraziProizvode(Integer donjaGranica, Integer gornjaGranica, String vrsta, String kljucnaRec, Integer korisnikId, Connection con) throws SQLException
     {
         List<ProizvodDto> proizvodi = new ArrayList<>();
@@ -82,7 +109,25 @@ public class ProizvodDao
         return proizvodi;
     }
     
+    public List<String> sveVrste(Connection con) throws SQLException
+    {
+        List<String> vrste = new ArrayList<>();
+        String query = "SELECT vrsta_opreme FROM proizvod WHERE 1=1";
 
+        try (PreparedStatement ps = con.prepareStatement(query))
+        {
+            int index = 1;
+            try (ResultSet rs = ps.executeQuery())
+            {
+                while (rs.next())
+                {
+                    vrste.add(rs.getString("vrsta_opreme"));
+                }
+            }
+        }
+        return vrste;
+    }
+            
     public Proizvod nadjiProizvodPoId(int id, Connection con) throws SQLException
     {
         Proizvod proizvod = null;
