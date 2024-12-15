@@ -58,6 +58,30 @@ public class ProizvodDao
         return proizvodi;
     }
 
+    public List<ProizvodDto> sviProizvodi(Connection con) throws SQLException
+    {
+        List<ProizvodDto> proizvodi = new ArrayList<>();
+        String query = "SELECT proizvod_id, naziv, cena FROM proizvod WHERE 1=1";
+
+        try (PreparedStatement ps = con.prepareStatement(query))
+        {
+            int index = 1;
+            try (ResultSet rs = ps.executeQuery())
+            {
+                while (rs.next())
+                {
+                    ProizvodDto proizvod = new ProizvodDto(
+                            rs.getInt("proizvod_id"),
+                            rs.getString("naziv"),
+                            rs.getInt("cena")
+                    );
+                    proizvodi.add(proizvod);
+                }
+            }
+        }
+        return proizvodi;
+    }
+    
 
     public Proizvod nadjiProizvodPoId(int id, Connection con) throws SQLException
     {

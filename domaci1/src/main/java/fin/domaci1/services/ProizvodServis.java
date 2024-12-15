@@ -25,6 +25,18 @@ public class ProizvodServis
         return instance;
     }
 
+     public List<ProizvodDto> sviProizvodi() throws Exception
+    {
+        try (Connection con = ResourcesManager.getConnection())
+        {
+            return proizvodDao.sviProizvodi(con);
+        }
+        catch (SQLException ex)
+        {
+            throw new Exception("Greska u pretrazi svih proizvoda.", ex);
+        }
+    }
+    
     public List<ProizvodDto> pretragaProizvoda(Integer donjaGranica, Integer gornjaGranica, String vrsta, String kljucnaRec, Integer korisnikId) throws Exception
     {
         try (Connection con = ResourcesManager.getConnection())

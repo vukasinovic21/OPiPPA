@@ -20,6 +20,15 @@ public class ProizvodController
     }
 
     @GET
+    @Path("/svi")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response pretragaProizvoda() throws Exception
+    {
+        return Response.ok(proizvodServis.sviProizvodi()).build();
+    }
+    
+    @GET
     @Path("/pretraga")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
