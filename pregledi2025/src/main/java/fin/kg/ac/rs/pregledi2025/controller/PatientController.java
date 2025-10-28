@@ -1,7 +1,7 @@
 package fin.kg.ac.rs.pregledi2025.controller;
 
 import fin.kg.ac.rs.pregledi2025.model.Patient;
-import fin.kg.ac.rs.pregledi2025.repository.PatientRepository;
+import fin.kg.ac.rs.pregledi2025.service.PatientService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,14 +12,14 @@ import java.util.List;
 @RequestMapping("/api/patients")
 public class PatientController {
 
-    private final PatientRepository patientRepository;
+    private final PatientService patientService;
 
-    public PatientController(PatientRepository patientRepository) {
-        this.patientRepository = patientRepository;
+    public PatientController(PatientService patientService) {
+        this.patientService = patientService;
     }
 
-    @GetMapping
-    public List<Patient> findAll(){
-        return patientRepository.findAll();
+    @GetMapping("/all")
+    public List<Patient> findAllPatients(){
+        return patientService.findAll();
     }
 }

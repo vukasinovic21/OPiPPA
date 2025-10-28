@@ -19,4 +19,6 @@ public class Appointment {
     @JoinColumn(name = "doctor_id")
     private Doctor doctor;
     private LocalDateTime time;
+    @Enumerated(EnumType.STRING)
+    private Status status;
 }
