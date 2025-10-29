@@ -3,7 +3,6 @@ package fin.kg.ac.rs.pregledi2025.controller;
 import fin.kg.ac.rs.pregledi2025.dto.AppointmentDto;
 import fin.kg.ac.rs.pregledi2025.model.Appointment;
 import fin.kg.ac.rs.pregledi2025.service.AppointmentService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,12 +25,7 @@ public class AppointmentController {
 
     @PostMapping("/book")
     public ResponseEntity<String> bookAppointment(@RequestBody AppointmentDto request){
-        boolean success = appointmentService.bookAppointment(request);
-        if(success) {
-            return ResponseEntity.ok("Appointment CONFIRMED!");
-        } else {
-            return ResponseEntity.status(HttpStatus.CONFLICT)
-                .body("Doctor is already booked at this time.");
-        }
+        appointmentService.bookAppointment(request);
+        return ResponseEntity.ok("Appointment request is being processed.");
     }
 }

@@ -2,10 +2,11 @@ package fin.kg.ac.rs.pregledi2025.dto;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Data
-public class AppointmentDto {
+public class AppointmentDto implements Serializable {
     private Long patientId;
     private Long doctorId;
     private LocalDateTime time;
