@@ -1,1 +1,9 @@
 /domaci1/target/
+
+/shelf/
+/workspace.xml
+
+.idea/
+target/
+out/
+*.iml
