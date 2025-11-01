@@ -1,1 +1,13 @@
-<p>all-patients works!</p>
+<h2>All Patients</h2>
+
+<div *ngIf="loading">Loading...</div>
+<div *ngIf="error" class="error">{{ error }}</div>
+
+<ul *ngIf="!loading && !error">
+  <li *ngFor="let patient of patients">
+    Name: <strong> {{ patient.name }} </strong><br>
+    Lastname: <strong> {{ patient.lastname }}</strong><br> 
+    Email: {{ patient.email }}<br> 
+    Number: {{ patient.number }} <br><br>
+  </li>
+</ul>

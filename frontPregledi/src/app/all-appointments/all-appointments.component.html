@@ -1,1 +1,13 @@
-<p>all-appointments works!</p>
+<h2>All Appointments</h2>
+
+<div *ngIf="loading">Loading...</div>
+<div *ngIf="error" class="error">{{ error }}</div>
+
+<ul *ngIf="!loading && !error">
+  <li *ngFor="let app of appointments">
+    Patient: <strong> {{ app.patient.name }} </strong><br>
+    Doctor: <strong> {{ app.doctor.name }}</strong><br> 
+    Date: {{ app.time }} <br>
+    Status: {{ app.status }}<br><br>
+  </li>
+</ul>
