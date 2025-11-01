@@ -24,6 +24,6 @@ export class DoctorService {
   }
 
   bookAppointment(payload: AppointmentPayload): Observable<any> {
-    return this.http.post(environment.backUrl + '/appointments/book', payload);
+    return this.http.post(environment.backUrl + '/appointments/book', payload, { responseType: 'text' })
   }
 }

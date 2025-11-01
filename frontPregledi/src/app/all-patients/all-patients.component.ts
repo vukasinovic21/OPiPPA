@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Patient } from '../models/patient';
 import { PatientService } from './patient.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-all-patients',
@@ -16,7 +17,7 @@ export class AllPatientsComponent implements OnInit{
   loading = true;
   error: string | null = null;
 
-  constructor(private patientService: PatientService) {}
+  constructor(private patientService: PatientService, private router: Router) {}
 
   ngOnInit(): void {
     this.patientService.getAllPatients().subscribe({
@@ -33,5 +34,6 @@ export class AllPatientsComponent implements OnInit{
 
   selectPatient(id: number): void {
     localStorage.setItem('patientId', id.toString());
+    this.router.navigate(['/doctors/all']);
   }
 }

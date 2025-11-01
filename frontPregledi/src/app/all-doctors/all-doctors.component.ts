@@ -4,6 +4,7 @@ import { Doctor } from '../models/doctor';
 import { DoctorService } from './doctor.service';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-all-doctors',
@@ -21,7 +22,7 @@ export class AllDoctorsComponent implements OnInit{
   selectedDate: string = '';
   patientId: number | null = null;
 
-  constructor(private doctorService: DoctorService, private http: HttpClient) {}
+  constructor(private doctorService: DoctorService, private http: HttpClient, private router: Router) {}
 
   ngOnInit(): void {
     this.doctorService.getAllDoctors().subscribe({
@@ -55,7 +56,9 @@ export class AllDoctorsComponent implements OnInit{
     };
 
     this.doctorService.bookAppointment(payload).subscribe({
-      next: () => alert('Appointment')
+      next: () =>{
+        this.router.navigate(['/appointments/all']);
+      } 
     });
   }
 
