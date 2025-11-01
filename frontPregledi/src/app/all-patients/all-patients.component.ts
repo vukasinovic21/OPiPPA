@@ -30,4 +30,8 @@ export class AllPatientsComponent implements OnInit{
       }
     });
   }
+
+  selectPatient(id: number): void {
+    localStorage.setItem('patientId', id.toString());
+  }
 }

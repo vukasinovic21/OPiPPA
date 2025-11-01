@@ -3,8 +3,8 @@
 <div *ngIf="loading">Loading...</div>
 <div *ngIf="error" class="error">{{ error }}</div>
 
-<ul *ngIf="!loading && !error">
-  <li *ngFor="let patient of patients">
+<ul class="appointments-grid" *ngIf="!loading && !error">
+  <li *ngFor="let patient of patients" (click)="selectPatient(patient.id)"  style="cursor: pointer;" class="appointment-card">
     Name: <strong> {{ patient.name }} </strong><br>
     Lastname: <strong> {{ patient.lastname }}</strong><br> 
     Email: {{ patient.email }}<br> 

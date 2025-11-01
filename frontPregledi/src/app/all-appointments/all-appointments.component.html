@@ -3,11 +3,13 @@
 <div *ngIf="loading">Loading...</div>
 <div *ngIf="error" class="error">{{ error }}</div>
 
-<ul *ngIf="!loading && !error">
-  <li *ngFor="let app of appointments">
-    Patient: <strong> {{ app.patient.name }} </strong><br>
-    Doctor: <strong> {{ app.doctor.name }}</strong><br> 
+<ul class="appointments-grid" *ngIf="!loading && !error">
+  <li *ngFor="let app of appointments" class="appointment-card">
+    Patient: <strong>{{ app.patient.name }} {{ app.patient.lastname }}</strong><br>
+    Doctor: <strong>{{ app.doctor.name }} {{ app.doctor.lastname }}</strong><br> 
     Date: {{ app.time }} <br>
-    Status: {{ app.status }}<br><br>
+    Status: <span [ngStyle]="{'color': app.status === 'CONFIRMED' ? 'green' : (app.status === 'REJECTED' ? 'red' : 'black')}">
+      {{ app.status }}
+    </span><br><br>
   </li>
 </ul>

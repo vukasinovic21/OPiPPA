@@ -21,7 +21,9 @@ export class AllAppointmentsComponent implements OnInit{
   ngOnInit(): void {
     this.appointmentsService.getAllAppointments().subscribe({
       next: (data) => {
-        this.appointments = data;
+        this.appointments = data.sort((a, b) => {
+        return new Date(a.time).getTime() - new Date(b.time).getTime();
+        });
         this.loading = false;
       },
       error: (err) => {

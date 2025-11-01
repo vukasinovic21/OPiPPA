@@ -16,5 +16,5 @@ import { CommonModule } from '@angular/common';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'frontPregledi';
+  title = 'Pregledi2025';
 }

@@ -3,10 +3,19 @@
 <div *ngIf="loading">Loading...</div>
 <div *ngIf="error" class="error">{{ error }}</div>
 
-<ul *ngIf="!loading && !error">
-  <li *ngFor="let doctor of doctors">
+<ul class="appointments-grid" *ngIf="!loading && !error">
+  <li *ngFor="let doctor of doctors" (click)="selectDoctor(doctor.id)" style="cursor: pointer;"  class="appointment-card">
     Name: <strong> {{ doctor.name }} </strong><br>
     Lastname: <strong> {{ doctor.lastname }}</strong><br> 
     Experience: {{ doctor.experience }} Years<br><br>
   </li>
 </ul>
+
+<div *ngIf="selectedDoctor">
+  <h3>Making an appointment with doctor: {{ selectedDoctor }}</h3>
+  
+  <label>Choose date:</label>
+  <input type="datetime-local" [(ngModel)]="selectedDate" />
+
+  <button (click)="bookAppointment()">Book an appointment</button>
+</div>
